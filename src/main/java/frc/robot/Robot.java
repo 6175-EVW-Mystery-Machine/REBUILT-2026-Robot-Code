@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import static frc.robot.Constants.CANStatus;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -20,6 +21,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+
+    float busUtil = CANStatus.BusUtilization; 
+    if (busUtil > 0.8) {
+      System.out.print("CANBus in heavy use!");
+    }
   }
 
   @Override

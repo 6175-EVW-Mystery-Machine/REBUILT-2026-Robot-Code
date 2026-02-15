@@ -14,15 +14,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.ShootFuel;
 import frc.robot.commands.SnowblowFuel;
-import frc.robot.commands.StopTest;
-import frc.robot.commands.TestFeederToShooter;
+import frc.robot.commands.StopShooting;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CTRE_CANdle;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -30,7 +28,7 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TurretRing;
-import frc.robot.subsystems.TurretWheel;
+import frc.robot.subsystems.TurretFlywheel;
 
 public class RobotContainer {
 
@@ -40,9 +38,9 @@ public class RobotContainer {
     private final Intake Intake = new Intake();
     private final CTRE_CANdle CANdle = new CTRE_CANdle();
     private final TurretRing TurretRing = new TurretRing();
-    private final TurretWheel TurretWheel = new TurretWheel();
+    private final TurretFlywheel TurretWheel = new TurretFlywheel();
 
-    // private final SendableChooser<Command> AutoChooser;
+    private final SendableChooser<Command> AutoChooser;
 
 
     //PRE-GENERATED CTR-E SWERVE DRIVE CODE
@@ -63,8 +61,8 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     public RobotContainer() {
-        // AutoChooser = AutoBuilder.buildAutoChooser();
-        // SmartDashboard.putData("Auto Chooser", AutoChooser);
+        AutoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", AutoChooser);
 
         configureBindings();
     }
@@ -109,7 +107,7 @@ public class RobotContainer {
         //START OF MANIPULATOR CONTROLS
         driverController.rightTrigger(0.5)
         .whileTrue(new ShootFuel(Indexer, Feeder, CANdle, TurretWheel))
-        .whileFalse(new StopTest(TurretWheel, Feeder, Indexer));
+        .whileFalse(new StopShooting(TurretWheel, Feeder, Indexer, Intake));
 
         driverController.povRight()
         .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(0.2)))
@@ -122,6 +120,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        return AutoChooser.getSelected();
     }
 }

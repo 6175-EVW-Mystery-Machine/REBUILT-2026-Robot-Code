@@ -7,20 +7,20 @@ import frc.robot.subsystems.CTRE_CANdle;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.TurretWheel;
+import frc.robot.subsystems.TurretFlywheel;
 
 public class SnowblowFuel extends SequentialCommandGroup {
 
-  public SnowblowFuel(Intake m_intake, CTRE_CANdle m_CANdle, Feeder m_feeder, Indexer m_indexer, TurretWheel m_turret) {
+  public SnowblowFuel(Intake m_intake, CTRE_CANdle m_CANdle, Feeder m_feeder, Indexer m_indexer, TurretFlywheel m_turret) {
     addCommands(
       new InstantCommand(() -> m_CANdle.v_snowblowTurret())
-        .alongWith(new InstantCommand(() -> m_intake.v_runWheels(0.5))),
-        new WaitCommand(0.5),
-          new InstantCommand(() -> m_feeder.v_runWheels(0.3)),
-          new WaitCommand(0.25),
+        .alongWith(new InstantCommand(() -> m_intake.v_runWheels(360))),
+        new WaitCommand(0.1),
+          new InstantCommand(() -> m_feeder.v_runWheels(576)),
+          new WaitCommand(0.1),
             new InstantCommand(() -> m_turret.v_runWheel(2500)),
-            new WaitCommand(0.25),
-              new InstantCommand(() -> m_indexer.v_runWheels(0.4))
+            new WaitCommand(0.1),
+              new InstantCommand(() -> m_indexer.v_runWheels(720))
     );
   }
 }

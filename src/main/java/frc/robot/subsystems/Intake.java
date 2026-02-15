@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
+import static com.revrobotics.spark.SparkBase.ControlType.kMAXMotionVelocityControl;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.MAXMotionConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -21,14 +21,24 @@ public class Intake extends SubsystemBase {
     .smartCurrentLimit(40)
     .idleMode(IdleMode.kCoast)
     .inverted(false);
+    m_config.closedLoop
+    .pid(0, 0, 0)
+    .feedForward.sva(0, 0.12, 0);
+    m_config.closedLoop.maxMotion
+    .cruiseVelocity(100)
+    .maxAcceleration(75);
 
     m_neo2.configure(m_config,
     ResetMode.kResetSafeParameters,
     PersistMode.kPersistParameters);
   }
 
-  public void v_runWheels(double speed) {
-    m_neo2.set(speed);
+  public void v_runWheels(double RPM) {
+    m_neo2.getClosedLoopController().setSetpoint(RPM/12, kMAXMotionVelocityControl);
+  }
+  
+  public void v_stopMotor() {
+    m_neo2.stopMotor();
   }
 
   @Override
