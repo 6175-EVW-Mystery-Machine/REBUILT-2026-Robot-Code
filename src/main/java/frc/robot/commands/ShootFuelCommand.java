@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.CTRE_CANdle;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TurretFlywheel;
 import frc.robot.subsystems.TurretRing;
 
@@ -15,6 +16,7 @@ public class ShootFuelCommand extends Command {
   private final TurretFlywheel turretFlywheel;
   private final Indexer indexer;
   private final Feeder feeder;
+  private final Intake intake;
   private final CTRE_CANdle CANdle;
   private final CommandXboxController controller;
 
@@ -22,15 +24,17 @@ public class ShootFuelCommand extends Command {
   TurretFlywheel turretFlywheel,
   Indexer indexer,
   Feeder feeder,
+  Intake intake,
   CTRE_CANdle CANdle,
   CommandXboxController controller) {
     this.turretRing = turretRing;
     this.turretFlywheel = turretFlywheel;
     this.indexer = indexer;
     this.feeder = feeder;
+    this.intake = intake;
     this.CANdle = CANdle;
     this.controller = controller;
-    addRequirements(turretRing, turretFlywheel, indexer, feeder, CANdle);
+    addRequirements(turretRing, turretFlywheel, indexer, feeder, intake, CANdle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,17 +46,18 @@ public class ShootFuelCommand extends Command {
     turretFlywheel.v_runWheel();
       feeder.v_runWheels(4400);
         indexer.v_runWheels(1500);
+          intake.v_runWheels(2400);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     controller.setRumble(RumbleType.kRightRumble, 0);
-    CANdle.v_clearIndexer();
-    CANdle.v_clearTurretRails();
+    CANdle.v_stopAll();
     turretRing.v_stopMotor();
       turretFlywheel.v_stopMotors();
         indexer.v_stopMotor();
           feeder.v_stopMotor();
+            intake.v_stopMotor();
   }
 }

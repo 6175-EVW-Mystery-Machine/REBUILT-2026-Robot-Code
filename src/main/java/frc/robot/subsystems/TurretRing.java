@@ -1,11 +1,8 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.MotorOutputConfigs;
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
 
 import static frc.robot.Constants.TurretConstants.RingGearFeedbackConfig;
 import static frc.robot.Constants.TurretConstants.RingGearMotionMagicConfig;
@@ -16,19 +13,11 @@ import static frc.robot.Constants.TurretConstants.RingGear0Config;
 import static frc.robot.Constants.TurretConstants.RingGear1Config;
 import static frc.robot.Constants.TurretConstants.RingGearID;
 import static frc.robot.Constants.TurretConstants.RingGearLimits;
-import static edu.wpi.first.math.util.Units.inchesToMeters;
 import static frc.robot.Constants.CANIVORE;
 
 import static frc.robot.subsystems.TurretMeasurements.m_robotRelativeAngle;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TurretRing extends SubsystemBase {

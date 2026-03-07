@@ -89,6 +89,7 @@ public class CTRE_CANdle extends SubsystemBase {
     m_CANdle.setControl(new FireAnimation(8, 53).withBrightness(1).withSparking(0.15).withCooling(0).withSlot(kLeftTurretSupport).withFrameRate(150).withDirection(AnimationDirectionValue.Backward));
     m_CANdle.setControl(new FireAnimation(54, 96).withBrightness(1).withSparking(0.15).withCooling(0).withSlot(kRightTurretSupport).withFrameRate(150));
     v_indexerLights();
+    v_intakeLights();
   }
 
   public void v_turretAim() {

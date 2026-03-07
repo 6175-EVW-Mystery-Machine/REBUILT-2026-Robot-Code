@@ -9,29 +9,33 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
-import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.RGBWColor;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 
+import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
+import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
+import static com.ctre.phoenix6.signals.NeutralModeValue.Coast;
+import static com.ctre.phoenix6.signals.NeutralModeValue.Brake;
 import static com.ctre.phoenix6.signals.FeedbackSensorSourceValue.FusedCANcoder;
+import static com.ctre.phoenix6.signals.FeedbackSensorSourceValue.RotorSensor;
 import static edu.wpi.first.math.util.Units.inchesToMeters;
 import static edu.wpi.first.units.Units.Rotations;
 
 public final class Constants{
+
+  public static final Pose2d blueHubLocation = new Pose2d(inchesToMeters(182.11), inchesToMeters(158.84), new Rotation2d());
+  public static final Pose2d redHubLocation = new Pose2d(inchesToMeters(469.11), inchesToMeters(158.85), new Rotation2d());
+
+  public static Pose2d hubLocation = new Pose2d();
 
   private Constants() {
   }
@@ -40,7 +44,6 @@ public final class Constants{
   public static final CANBusStatus CANStatus = new CANBusStatus();
 
 
-  public static final Pose2d hubLocation = new Pose2d(inchesToMeters(182.11), inchesToMeters(158.84), new Rotation2d());
 
   public static class OdometryConstants {
     public static final Matrix<N3, N1> StateSTDDevs = VecBuilder.fill(
@@ -54,7 +57,6 @@ public final class Constants{
     public static int FlywheelLeaderID = 18;
     public static int FlywheelFollowerID = 19; 
     public static VelocityVoltage VelocityRequest = new VelocityVoltage(0).withEnableFOC(false);
-    public static MotionMagicVelocityVoltage MotionMagicVelocityRequest = new MotionMagicVelocityVoltage(0).withEnableFOC(false);
       public static final SlotConfigs FlywheelConfig = new SlotConfigs()
       .withKP(1)
       .withKD(0)
@@ -100,8 +102,25 @@ public final class Constants{
       .withForwardSoftLimitEnable(true)
       .withReverseSoftLimitEnable(true);
       public static final MotorOutputConfigs RingGearMotorOutput = new MotorOutputConfigs()
-      .withInverted(InvertedValue.Clockwise_Positive)
-      .withNeutralMode(NeutralModeValue.Brake);
+      .withInverted(Clockwise_Positive)
+      .withNeutralMode(Brake);
+  }
+
+  public static class IntakeConstants {
+      public static int IntakeID = 13;
+      public static final SlotConfigs IntakeConfig = new SlotConfigs()
+      .withKP(1)
+      .withKD(0)
+      .withKS(0)
+      .withKV(.06)
+      .withKA(0);
+      public static final FeedbackConfigs IntakeFeedbackConfig = new FeedbackConfigs()
+      .withFeedbackSensorSource(RotorSensor)
+      .withRotorToSensorRatio(1)
+      .withSensorToMechanismRatio(2);
+      public static final MotorOutputConfigs IntakeOutputConfig = new MotorOutputConfigs()
+      .withInverted(CounterClockwise_Positive)
+      .withNeutralMode(Coast);
   }
 
   public static class CANdle {
@@ -123,9 +142,5 @@ public final class Constants{
       public static RGBWColor kPink = new RGBWColor(255, 0, 150);
       public static RGBWColor kCyan = new RGBWColor(0, 255, 200);
   }
-
-  // public static class VisionConstants() {
-
-  // }
 
 }

@@ -1,14 +1,6 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
-
-import java.time.Instant;
-import java.util.concurrent.TransferQueue;
-import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -16,9 +8,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -71,7 +60,6 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed); 
 
     private final CommandXboxController driverController = new CommandXboxController(0);
-    private final XboxController controller = new XboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final SendableChooser<Command> autoChooser;
@@ -86,7 +74,7 @@ public class RobotContainer {
 
     public RobotContainer() {
 
-        NamedCommands.registerCommand("Target & Shoot", new ShootFuelCommand(TurretRing, TurretWheel, Indexer, Feeder, CANdle, driverController));
+        NamedCommands.registerCommand("Target & Shoot", new ShootFuelCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle, driverController));
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -94,7 +82,7 @@ public class RobotContainer {
 
         CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
-        TurretPosition.setDefaultCommand(new RunCommand(() -> TurretPosition.getGearPosition(Constants.hubLocation, drivetrain.getState().Pose), TurretPosition));
+        TurretPosition.setDefaultCommand(new RunCommand(() -> TurretPosition.getGearPosition(drivetrain.getState().Pose, drivetrain.getState().Speeds), TurretPosition));
     }
 
 
@@ -157,7 +145,7 @@ public class RobotContainer {
         .whileTrue(new IntakeCommand(Intake, CANdle, driverController));
 
         driverController.rightTrigger(0.5)
-        .whileTrue(new ShootFuelCommand(TurretRing, TurretWheel, Indexer, Feeder, CANdle, driverController));
+        .whileTrue(new ShootFuelCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle, driverController));
 
 
         //TURRET MANUAL CONTROLS
@@ -168,16 +156,8 @@ public class RobotContainer {
         .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(-500)))
         .onFalse(new InstantCommand(() -> TurretRing.v_stopMotor()));
 
-        // driverController.x()
-        // .onTrue(new TargetTurretCommand(TurretRing));
-
-        // driverController.b()
-        // .onTrue(new StopTargeting(TurretRing));
-
         driverController.a()
         .onTrue(new InstantCommand(() -> TurretRing.v_resetEncoder()));
-        
-        
     }
 
     public Command getAutonomousCommand() {

@@ -6,17 +6,20 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import static com.ctre.phoenix6.signals.MotorAlignmentValue.Opposed;
-import static edu.wpi.first.math.util.Units.inchesToMeters;
+import static edu.wpi.first.math.util.Units.rotationsPerMinuteToRadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.Constants.TurretConstants.FlywheelConfig;
 import static frc.robot.Constants.TurretConstants.FlywheelFeedback;
 import static frc.robot.Constants.TurretConstants.FlywheelMotionMagicConfig;
-import static frc.robot.Constants.TurretConstants.MotionMagicVelocityRequest;
 import static frc.robot.Constants.TurretConstants.FlywheelLeaderID;
 import static frc.robot.Constants.TurretConstants.FlywheelFollowerID;
 import static frc.robot.Constants.TurretConstants.VelocityRequest;
-import static frc.robot.subsystems.TurretMeasurements.distanceToHub;
+import static frc.robot.subsystems.TurretMeasurements.distanceToTarget;
 import static frc.robot.Constants.CANIVORE;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,6 +29,7 @@ public class TurretFlywheel extends SubsystemBase {
   private final TalonFX m_flywheelFollower = new TalonFX(FlywheelFollowerID, CANIVORE);
   private boolean shooting = false;
   public boolean motorAtSpeed = false;
+  public static double DesiredMotorRPM;
 
   public TurretFlywheel() {
     ConfigureMotors();
@@ -36,7 +40,6 @@ public class TurretFlywheel extends SubsystemBase {
     .withSlot0(Slot0Configs.from(FlywheelConfig))
     .withMotionMagic(FlywheelMotionMagicConfig)
     .withFeedback(FlywheelFeedback);
-    // m_config.TorqueCurrent.TorqueNeutralDeadband = 16;
 
     m_flywheel.getConfigurator().apply(m_config);
     m_flywheelFollower.getConfigurator().apply(m_config);
@@ -44,16 +47,21 @@ public class TurretFlywheel extends SubsystemBase {
   }
 
   public void v_runWheel() {
-    if (distanceToHub > 70 && distanceToHub < 85) {
-      m_flywheel.setControl(VelocityRequest.withVelocity((distanceToHub * 10.5) / 60).withAcceleration(0.2));
-    } else if (distanceToHub > 85 && distanceToHub < 100) {
-      m_flywheel.setControl(VelocityRequest.withVelocity((distanceToHub * 9) / 60).withAcceleration(0.2));
-    } else if (distanceToHub > 100 && distanceToHub < 130) {
-    m_flywheel.setControl(VelocityRequest.withVelocity((distanceToHub * 7.8) / 60).withAcceleration(0.2));
-    } else if (distanceToHub > 130 && distanceToHub < 190) {
-      m_flywheel.setControl(VelocityRequest.withVelocity((distanceToHub * 7) / 60).withAcceleration(0.2));
+    if (distanceToTarget < 100) {
+      m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
+        575 / 60,
+        1150 / 60,
+        distanceToTarget / 200)));
+    } else if (distanceToTarget > 100) {
+      m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
+        550 / 60,
+        1150 / 60,
+        distanceToTarget / 200)));
     }
-    shooting = true;
+
+  }
+
+  void interpolationTable() {
   }
 
   public void v_stopMotors() {
@@ -69,5 +77,6 @@ public class TurretFlywheel extends SubsystemBase {
       SmartDashboard.putNumber("Turret RPM", Math.round(m_flywheel.getVelocity().getValueAsDouble() * 60));
 
       SmartDashboard.putBoolean("Shooting Fuel?", shooting);
+      SmartDashboard.putNumber("Target RPM", MathUtil.interpolate(500, 1250, distanceToTarget / 190));
   }
 }
