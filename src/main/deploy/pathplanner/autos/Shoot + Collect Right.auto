@@ -42,12 +42,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Shoot_+_Collect Right Shake 1"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 5.0
@@ -63,6 +57,36 @@
           "type": "path",
           "data": {
             "pathName": "Shoot_+_Collect Right 4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot_+_Collect Right 5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Target & Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Target & Shoot"
           }
         }
       ]

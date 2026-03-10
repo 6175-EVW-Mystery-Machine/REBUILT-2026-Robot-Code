@@ -5,14 +5,10 @@ import com.ctre.phoenix6.controls.ColorFlowAnimation;
 import com.ctre.phoenix6.controls.EmptyAnimation;
 import com.ctre.phoenix6.controls.FireAnimation;
 import com.ctre.phoenix6.controls.LarsonAnimation;
-import com.ctre.phoenix6.controls.RainbowAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
-import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
-import com.ctre.phoenix6.controls.TwinkleAnimation;
 import com.ctre.phoenix6.signals.AnimationDirectionValue;
 import com.ctre.phoenix6.signals.LarsonBounceValue;
-import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
 import com.ctre.phoenix6.hardware.CANdle;
 
@@ -32,7 +28,6 @@ import static frc.robot.Constants.CANdle.kRed;
 import static frc.robot.Constants.CANdle.kYellow;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.LimelightHelpers;
 
 public class CTRE_CANdle extends SubsystemBase {
 

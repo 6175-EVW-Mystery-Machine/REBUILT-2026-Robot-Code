@@ -6,8 +6,6 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import static com.ctre.phoenix6.signals.MotorAlignmentValue.Opposed;
-import static edu.wpi.first.math.util.Units.rotationsPerMinuteToRadiansPerSecond;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.Constants.TurretConstants.FlywheelConfig;
 import static frc.robot.Constants.TurretConstants.FlywheelFeedback;
 import static frc.robot.Constants.TurretConstants.FlywheelMotionMagicConfig;
@@ -18,8 +16,6 @@ import static frc.robot.subsystems.TurretMeasurements.distanceToTarget;
 import static frc.robot.Constants.CANIVORE;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
-import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -49,19 +45,16 @@ public class TurretFlywheel extends SubsystemBase {
   public void v_runWheel() {
     if (distanceToTarget < 100) {
       m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
-        575 / 60,
+        675 / 60,
         1150 / 60,
-        distanceToTarget / 200)));
+        distanceToTarget / 220)));
     } else if (distanceToTarget > 100) {
       m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
         550 / 60,
-        1250 / 60,
-        distanceToTarget / 200)));
+        1300 / 60,
+        distanceToTarget / 220)));
     }
 
-  }
-
-  void interpolationTable() {
   }
 
   public void v_stopMotors() {

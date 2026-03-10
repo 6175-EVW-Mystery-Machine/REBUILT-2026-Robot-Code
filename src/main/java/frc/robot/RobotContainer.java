@@ -23,8 +23,6 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootFuelCommand;
 import frc.robot.commands.StopAutoIntakeCommand;
 import frc.robot.commands.StopAutoShootCommand;
-import frc.robot.commands.StopTargeting;
-import frc.robot.commands.TargetTurretCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CTRE_CANdle;
 import frc.robot.subsystems.CommandSwerveDrivetrain;

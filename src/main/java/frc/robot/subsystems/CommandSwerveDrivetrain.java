@@ -15,7 +15,6 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -211,8 +210,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
                 .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
                 new PPHolonomicDriveController(
-                    new PIDConstants(5,0,0),
-                    new PIDConstants(5, 0, 0)),
+                    new PIDConstants(5, 0,0.2),
+                    new PIDConstants(5, 0, 0.2)),
                     
                     config,
                 
