@@ -22,7 +22,7 @@ public class IntakeCommand extends Command {
   @Override
   public void execute() {
     CANdle.v_intakeLights();
-    intake.v_runWheels(1800);
+    intake.v_runWheels(900);
     driverController.setRumble(RumbleType.kLeftRumble, 0.5);
   }
 

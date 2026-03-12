@@ -6,7 +6,9 @@ import com.ctre.phoenix6.controls.EmptyAnimation;
 import com.ctre.phoenix6.controls.FireAnimation;
 import com.ctre.phoenix6.controls.LarsonAnimation;
 import com.ctre.phoenix6.controls.SingleFadeAnimation;
+import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.controls.StrobeAnimation;
+import com.ctre.phoenix6.controls.TwinkleAnimation;
 import com.ctre.phoenix6.signals.AnimationDirectionValue;
 import com.ctre.phoenix6.signals.LarsonBounceValue;
 import com.ctre.phoenix6.signals.StripTypeValue;
@@ -37,9 +39,9 @@ public class CTRE_CANdle extends SubsystemBase {
   /*
   LeftIntake: 204-230
   RightIntake: 231-257
-  Indexer: 97-203
+  Indexer: 95-203
   LeftTurretSupport: 8-53
-  RightTurretSupport: 54-96
+  RightTurretSupport: 54-94
   CandleLights: 0-7
   */
 
@@ -49,7 +51,6 @@ public class CTRE_CANdle extends SubsystemBase {
     m_CANdle.getConfigurator().apply(m_config);
 
     v_stopAll();
-    v_startAnim();
   }
 
   public void v_stopAll() {
@@ -61,14 +62,12 @@ public class CTRE_CANdle extends SubsystemBase {
     m_CANdle.setControl(new EmptyAnimation(5));
     m_CANdle.setControl(new EmptyAnimation(6));
     m_CANdle.setControl(new EmptyAnimation(7));
-  }
 
-  public void v_startAnim() {
-    m_CANdle.setControl(new SingleFadeAnimation(8, 53).withColor(kCyan).withSlot(kLeftTurretSupport).withFrameRate(30));
-    m_CANdle.setControl(new SingleFadeAnimation(54, 96).withColor(kCyan).withSlot(kRightTurretSupport).withFrameRate(30));
-      m_CANdle.setControl(new LarsonAnimation(97, 203).withColor(kGreen).withFrameRate(120).withSize(10).withSlot(kIndexer).withBounceMode(LarsonBounceValue.Back));
-        m_CANdle.setControl(new ColorFlowAnimation(204, 230).withSlot(kLeftIntake).withFrameRate(45).withColor(kPurple));
-        m_CANdle.setControl(new ColorFlowAnimation(231, 257).withSlot(kRightIntake).withFrameRate(45).withColor(kPurple));
+      m_CANdle.setControl(new SingleFadeAnimation(8, 53).withColor(kLime).withFrameRate(20).withSlot(kLeftTurretSupport));
+      m_CANdle.setControl(new SingleFadeAnimation(54, 94).withColor(kLime).withFrameRate(20).withSlot(kRightTurretSupport));
+      m_CANdle.setControl(new SingleFadeAnimation(95, 203).withColor(kOrange).withFrameRate(20).withSlot(kIndexer));
+      m_CANdle.setControl(new SingleFadeAnimation(204, 230).withColor(kBlue).withFrameRate(20).withSlot(kLeftIntake));
+      m_CANdle.setControl(new SingleFadeAnimation(231, 257).withColor(kBlue).withFrameRate(20).withSlot(kRightIntake));
   }
 
   public void v_intakeLights() {
@@ -77,21 +76,19 @@ public class CTRE_CANdle extends SubsystemBase {
   }
 
   public void v_indexerLights() {
-    m_CANdle.setControl(new ColorFlowAnimation(97, 203).withColor(kBlue).withFrameRate(480).withSlot(kIndexer));
+    m_CANdle.setControl(new ColorFlowAnimation(95, 203).withColor(kBlue).withFrameRate(480).withSlot(kIndexer));
   }
 
   public void v_turretShoot() {
     m_CANdle.setControl(new FireAnimation(8, 53).withBrightness(1).withSparking(0.15).withCooling(0).withSlot(kLeftTurretSupport).withFrameRate(150).withDirection(AnimationDirectionValue.Backward));
-    m_CANdle.setControl(new FireAnimation(54, 96).withBrightness(1).withSparking(0.15).withCooling(0).withSlot(kRightTurretSupport).withFrameRate(150));
-    v_indexerLights();
-    v_intakeLights();
+    m_CANdle.setControl(new FireAnimation(54, 94).withBrightness(1).withSparking(0.15).withCooling(0).withSlot(kRightTurretSupport).withFrameRate(150));
   }
 
   public void v_turretAim() {
-    m_CANdle.setControl(new StrobeAnimation(0, 7).withColor(kYellow).withFrameRate(15).withSlot(5));
+    m_CANdle.setControl(new StrobeAnimation(0, 7).withColor(kYellow).withFrameRate(10).withSlot(5));
   }
 
-  public void v_snowblowTurret() {
+  public void v_runAll() {
     v_intakeLights();
     v_indexerLights();
     v_turretShoot();
@@ -101,15 +98,20 @@ public class CTRE_CANdle extends SubsystemBase {
   public void v_clearTurretRails() {
     m_CANdle.setControl(new EmptyAnimation(kLeftTurretSupport));
     m_CANdle.setControl(new EmptyAnimation(kRightTurretSupport));
+      m_CANdle.setControl(new SingleFadeAnimation(8, 53).withColor(kLime).withFrameRate(20).withSlot(kLeftTurretSupport));
+      m_CANdle.setControl(new SingleFadeAnimation(54, 96).withColor(kLime).withFrameRate(20).withSlot(kRightTurretSupport));
   }
 
   public void v_clearIntake() {
     m_CANdle.setControl(new EmptyAnimation(kLeftIntake));
     m_CANdle.setControl(new EmptyAnimation(kRightIntake));
+      m_CANdle.setControl(new SingleFadeAnimation(204, 230).withColor(kBlue).withFrameRate(20).withSlot(kLeftIntake));
+      m_CANdle.setControl(new SingleFadeAnimation(231, 257).withColor(kBlue).withFrameRate(20).withSlot(kRightIntake));
   }
   
   public void v_clearIndexer() {
     m_CANdle.setControl(new EmptyAnimation(kIndexer));
+      m_CANdle.setControl(new SingleFadeAnimation(97, 203).withColor(kOrange).withFrameRate(20).withSlot(kIndexer));
   }
 
   @Override

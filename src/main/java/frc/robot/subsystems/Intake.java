@@ -32,7 +32,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void v_runWheels(double RPM) {
-    m_krakenX44.setControl(VelocityRequest.withVelocity((RPM / 60) / 2).withAcceleration(0.1));
+    m_krakenX44.setControl(VelocityRequest.withVelocity(RPM / 60).withAcceleration(0.1));
     intaking = true;
   }
   

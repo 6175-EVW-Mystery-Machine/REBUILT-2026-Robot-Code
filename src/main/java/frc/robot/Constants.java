@@ -109,10 +109,10 @@ public final class Constants{
   public static class IntakeConstants {
       public static int IntakeID = 13;
       public static final SlotConfigs IntakeConfig = new SlotConfigs()
-      .withKP(1)
+      .withKP(0.8)
       .withKD(0)
       .withKS(0)
-      .withKV(.06)
+      .withKV(0.24)
       .withKA(0);
       public static final FeedbackConfigs IntakeFeedbackConfig = new FeedbackConfigs()
       .withFeedbackSensorSource(RotorSensor)

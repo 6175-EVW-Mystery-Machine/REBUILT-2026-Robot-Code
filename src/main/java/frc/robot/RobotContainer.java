@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutoIntakeCommand;
 import frc.robot.commands.AutoShootCommand;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ShootFuelCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.StopAutoIntakeCommand;
 import frc.robot.commands.StopAutoShootCommand;
 import frc.robot.generated.TunerConstants;
@@ -62,14 +62,6 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final SendableChooser<Command> autoChooser;
-
-    public void intakeDriveSpeed() {
-        drivetrain.applyRequest(() ->
-            drive.withVelocityX(-driverController.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                .withVelocityY(-driverController.getLeftX() * MaxSpeed *.25) // Drive left with negative X (left)
-                .withRotationalRate(-driverController.getRightX() * MaxAngularRate *.25) // Drive counterclockwise with negative X (left)
-        );
-    }
 
     public RobotContainer() {
 
@@ -129,7 +121,7 @@ public class RobotContainer {
         .whileTrue(new IntakeCommand(Intake, CANdle, driverController));
 
         driverController.rightTrigger(0.5)
-        .whileTrue(new ShootFuelCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle, driverController));
+        .whileTrue(new ShootCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle, driverController));
 
 
         //TURRET MANUAL CONTROLS
