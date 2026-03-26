@@ -6,7 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static frc.robot.Constants.CANIVORE;
+import static frc.robot.Constants.ManipulatorCanivore;
 import static frc.robot.Constants.TurretConstants.VelocityRequest;
 import static frc.robot.Constants.IntakeConstants.IntakeID;
 import static frc.robot.Constants.IntakeConstants.IntakeConfig;
@@ -15,7 +15,7 @@ import static frc.robot.Constants.IntakeConstants.IntakeOutputConfig;
 
 public class Intake extends SubsystemBase {
 
-  private final TalonFX m_krakenX44 = new TalonFX(IntakeID, CANIVORE);
+  private final TalonFX m_krakenX44 = new TalonFX(IntakeID, ManipulatorCanivore);
   public boolean intaking = false;
 
   public Intake() {

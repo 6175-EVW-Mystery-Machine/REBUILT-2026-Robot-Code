@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
       if (frontPoseEstimate != null && frontPoseEstimate.tagCount > 0 && angVelocity < 2.0 && frontPoseEstimate.avgTagDist < 3.5) {
         m_robotContainer.drivetrain.addVisionMeasurement(frontPoseEstimate.pose, frontPoseEstimate.timestampSeconds);
       }
-
+      
       if (DriverStation.getAlliance().get() == Alliance.Blue) {
         if (robotPose.getX() < inchesToMeters(162)) {
           target = blueHubLocation;

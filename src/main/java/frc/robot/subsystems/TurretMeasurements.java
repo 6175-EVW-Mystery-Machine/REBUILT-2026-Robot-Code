@@ -28,13 +28,23 @@ public class TurretMeasurements extends SubsystemBase {
 
     //ROBOT SPEED READINGS
     var robotSpeeds = robotSpeedSupplier;
+
+    if (robotPose.getRotation().getDegrees() < 0) {
       vRobot = passing == false ? new Translation2d(robotSpeeds.vyMetersPerSecond, -robotSpeeds.vxMetersPerSecond) : 
+      new Translation2d(robotSpeeds.vyMetersPerSecond, -robotSpeeds.vxMetersPerSecond);
+    } else if (robotPose.getRotation().getDegrees() > 0) {
+      vRobot = passing == false ? new Translation2d(robotSpeeds.vyMetersPerSecond, robotSpeeds.vxMetersPerSecond) : 
       new Translation2d(-robotSpeeds.vyMetersPerSecond, robotSpeeds.vxMetersPerSecond);
+    }
+
+    var omega = robotSpeeds.omegaRadiansPerSecond;
 
     //SHOOTER TRANSLATION SETUP
     Translation2d turretPose = robotPose.getTranslation().plus(robotToTurret.rotateBy(robotPose.getRotation()));
+    var robotToTurret = turretPose.minus(robotPose.getTranslation());
+    var vTan = new Translation2d(-omega * robotToTurret.getY(), omega * robotToTurret.getX());
 
-      Translation2d predictedTargetTranslation = target.getTranslation().minus(vRobot);
+      Translation2d predictedTargetTranslation = target.getTranslation().minus(vRobot.plus(vTan));
 
     double tY = predictedTargetTranslation.getY() - robotPose.getY();
     double tX = predictedTargetTranslation.getX() - robotPose.getX();
@@ -49,6 +59,7 @@ public class TurretMeasurements extends SubsystemBase {
 
     SmartDashboard.putNumber("Shooting Offset X", vRobot.getX());
     SmartDashboard.putNumber("Shooting Offset Y", vRobot.getY());
+    SmartDashboard.putNumber("Robot Rotation", robotPose.getRotation().getDegrees());
 
     distanceToTarget = metersToInches(turretPose.getDistance(predictedTargetTranslation));
   }

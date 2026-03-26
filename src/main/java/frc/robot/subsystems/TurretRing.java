@@ -13,7 +13,7 @@ import static frc.robot.Constants.TurretConstants.RingGear0Config;
 import static frc.robot.Constants.TurretConstants.RingGear1Config;
 import static frc.robot.Constants.TurretConstants.RingGearID;
 import static frc.robot.Constants.TurretConstants.RingGearLimits;
-import static frc.robot.Constants.CANIVORE;
+import static frc.robot.Constants.ManipulatorCanivore;
 
 import static frc.robot.subsystems.TurretMeasurements.turretAngle;
 
@@ -22,8 +22,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TurretRing extends SubsystemBase {
 
-  private final TalonFX m_krakenX44 = new TalonFX(RingGearID, CANIVORE);
-  private final CANcoder m_encoder = new CANcoder(17, CANIVORE);
+  private final TalonFX m_krakenX44 = new TalonFX(RingGearID, ManipulatorCanivore);
+  private final CANcoder m_encoder = new CANcoder(17, ManipulatorCanivore);
   public static boolean VaildTurretPosition;
 
   public TurretRing() {

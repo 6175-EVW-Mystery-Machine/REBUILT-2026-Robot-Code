@@ -13,7 +13,7 @@ import static frc.robot.Constants.TurretConstants.FlywheelLeaderID;
 import static frc.robot.Constants.TurretConstants.FlywheelFollowerID;
 import static frc.robot.Constants.TurretConstants.VelocityRequest;
 import static frc.robot.subsystems.TurretMeasurements.distanceToTarget;
-import static frc.robot.Constants.CANIVORE;
+import static frc.robot.Constants.ManipulatorCanivore;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,8 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TurretFlywheel extends SubsystemBase {
 
-  private final TalonFX m_flywheel = new TalonFX(FlywheelLeaderID, CANIVORE);
-  private final TalonFX m_flywheelFollower = new TalonFX(FlywheelFollowerID, CANIVORE);
+  private final TalonFX m_flywheel = new TalonFX(FlywheelLeaderID, ManipulatorCanivore);
+  private final TalonFX m_flywheelFollower = new TalonFX(FlywheelFollowerID, ManipulatorCanivore);
   private boolean shooting = false;
   public static boolean passing = false;
   public static boolean ShooterAtSpeed;

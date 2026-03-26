@@ -46,7 +46,8 @@ public final class Constants {
   private Constants() {
   }
 
-  public static final CANBus CANIVORE = new CANBus("canivore");
+  public static final CANBus DrivetrainCanivore = new CANBus("Drivetrain");
+  public static final CANBus ManipulatorCanivore = new CANBus("Manipulators");
   public static final CANBusStatus CANStatus = new CANBusStatus();
 
 
