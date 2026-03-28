@@ -87,34 +87,6 @@ public class Robot extends TimedRobot {
       if (frontPoseEstimate != null && frontPoseEstimate.tagCount > 0 && angVelocity < 2.0 && frontPoseEstimate.avgTagDist < 3.5) {
         m_robotContainer.drivetrain.addVisionMeasurement(frontPoseEstimate.pose, frontPoseEstimate.timestampSeconds);
       }
-      
-      if (DriverStation.getAlliance().get() == Alliance.Blue) {
-        if (robotPose.getX() < inchesToMeters(162)) {
-          target = blueHubLocation;
-          passing = false;
-        } else if (robotPose.getX() > inchesToMeters(162)) {
-          passing = true;
-          if (robotPose.getY() < inchesToMeters(158.84)) {
-            target = blueRightPassing;
-          } else if (robotPose.getY() > inchesToMeters(158.84)) {
-            target = blueLeftPassing;
-          }
-        }
-      } else if (DriverStation.getAlliance().get() == Alliance.Red) {
-        if (robotPose.getX() > inchesToMeters(490)) {
-          target = redHubLocation;
-          passing = false;
-        } else if (robotPose.getX() < inchesToMeters(490)) {
-          passing = true;
-          if (robotPose.getY() < inchesToMeters(158.84)) {
-            target = redLeftPassing;
-          } else if (robotPose.getY() > inchesToMeters(158.84)) {
-            target = redRightPassing;
-          }
-        } 
-      } else if (DriverStation.getAlliance().isEmpty()) {
-        return;
-      }
   }
 
   @Override

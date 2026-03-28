@@ -43,7 +43,7 @@ public class RobotContainer {
     private final CTRE_CANdle CANdle = new CTRE_CANdle();
     private final TurretRing TurretRing = new TurretRing();
     private final TurretFlywheel TurretWheel = new TurretFlywheel();
-    private final TurretMeasurements TurretPosition = new TurretMeasurements();
+    private final TurretMeasurements TurretMeasurements = new TurretMeasurements();
 
 
     //PRE-GENERATED CTR-E SWERVE DRIVE CODE
@@ -77,7 +77,7 @@ public class RobotContainer {
 
         CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand());
 
-        TurretPosition.setDefaultCommand(new RunCommand(() -> TurretPosition.getGearPosition(drivetrain.getState().Pose, drivetrain.getState().Speeds), TurretPosition));
+        TurretMeasurements.setDefaultCommand(new RunCommand(() -> TurretMeasurements.getTurretData(drivetrain.getState().Pose, drivetrain.getState().Speeds), TurretMeasurements));
     }
 
 
