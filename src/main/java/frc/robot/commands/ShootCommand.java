@@ -42,10 +42,11 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+        intake.v_runWheels(775);
+    if (VaildTurretPosition == true) {
       turretFlywheel.v_runWheel();
       turretRing.v_positionTurret();
-        intake.v_runWheels(775);
-    if (ShooterAtSpeed == true && VaildTurretPosition == true) {
+    if (ShooterAtSpeed == true) {
     CANdle.v_runAll();
     controller.setRumble(RumbleType.kRightRumble, 1);
       feeder.v_runWheels(4400);
@@ -55,7 +56,14 @@ public class ShootCommand extends Command {
       feeder.v_stopMotor();
       indexer.v_stopMotor();
     }
+  } else {
+  CANdle.v_notTargeted();
+    turretRing.v_stopMotor();
+      turretFlywheel.v_stopMotors();
+        indexer.v_stopMotor();
+          feeder.v_stopMotor();
   }
+}
 
   // Called once the command ends or is interrupted.
   @Override

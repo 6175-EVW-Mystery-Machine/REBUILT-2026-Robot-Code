@@ -19,7 +19,7 @@ public class Feeder extends SubsystemBase {
 
   public Feeder() {
     m_config
-    .smartCurrentLimit(40)
+    .smartCurrentLimit(80)
     .inverted(true)
     .idleMode(IdleMode.kCoast);
     m_config.closedLoop

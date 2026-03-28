@@ -23,6 +23,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.StopAutoIntakeCommand;
 import frc.robot.commands.StopAutoShootCommand;
+import frc.robot.commands.UnJamCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CTRE_CANdle;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -133,7 +134,7 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> TurretRing.v_stopMotor()));
 
         driverController.a()
-        .onTrue(new InstantCommand(() -> TurretRing.v_resetEncoder()));
+        .whileTrue(new UnJamCommand(Indexer, CANdle, driverController));
     }
 
     public Command getAutonomousCommand() {

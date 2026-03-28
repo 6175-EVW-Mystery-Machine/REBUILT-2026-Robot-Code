@@ -21,8 +21,8 @@ public class Indexer extends SubsystemBase {
 
   public Indexer() {
     m_config
-    .smartCurrentLimit(40)
-    .idleMode(IdleMode.kCoast)
+    .smartCurrentLimit(80)
+    .idleMode(IdleMode.kBrake)
     .inverted(true);
     m_config.closedLoop
     .pid(0, 0, 0)
