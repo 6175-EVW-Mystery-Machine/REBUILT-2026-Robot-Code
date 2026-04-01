@@ -15,6 +15,7 @@ import static frc.robot.Constants.TurretConstants.VelocityRequest;
 import static frc.robot.subsystems.TurretMeasurements.distanceToTarget;
 import static frc.robot.Constants.ManipulatorCanivore;
 
+import edu.wpi.first.math.MathUsageId;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -58,13 +59,13 @@ public class TurretFlywheel extends SubsystemBase {
     } else if (distanceToTarget > 100) {
       m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
         700 / 60,
-        1350 / 60,
+        1400 / 60,
         distanceToTarget / 220)));
 
       //RPM CHECK
       PredictedRPM = MathUtil.interpolate(
         700 / 60,
-        1350 / 60,
+        1400 / 60,
         distanceToTarget / 220);
     }
     shooting = true;

@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import static frc.robot.subsystems.TurretFlywheel.ShooterAtSpeed;
+import static frc.robot.subsystems.TurretRing.VaildTurretPosition;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.CTRE_CANdle;
@@ -29,11 +32,11 @@ public class AutoShootCommand extends InstantCommand {
 
   @Override
   public void execute() {
-    CANdle.v_turretShoot();
-    turretRing.v_positionTurret();
+  intake.v_runWheels(775);
     turretFlywheel.v_runWheel();
+    turretRing.v_positionTurret();
+    CANdle.v_runAll();
       feeder.v_runWheels(4400);
-        indexer.v_runWheels(1500);
-          intake.v_runWheels(3000);
-  }
+        indexer.v_runWheels(2250);
+}
 }

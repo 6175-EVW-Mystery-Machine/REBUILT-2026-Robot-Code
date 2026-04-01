@@ -71,7 +71,8 @@ public class CTRE_CANdle extends SubsystemBase {
   }
 
   public void v_unJam() {
-    m_CANdle.setControl(new ColorFlowAnimation(95, 203).withColor(kRed).withFrameRate(480).withSlot(kIndexer).withDirection(AnimationDirectionValue.Backward));
+    m_CANdle.setControl(new ColorFlowAnimation(204, 230).withColor(kYellow).withSlot(kLeftIntake).withFrameRate(240).withDirection(AnimationDirectionValue.Forward));
+    m_CANdle.setControl(new ColorFlowAnimation(231, 257).withColor(kYellow).withSlot(kRightIntake).withFrameRate(240).withDirection(AnimationDirectionValue.Forward));
   }
 
   public void v_intakeLights() {

@@ -18,6 +18,6 @@ public class AutoIntakeCommand extends InstantCommand {
   @Override
   public void execute() {
     CANdle.v_intakeLights();
-    intake.v_runWheels(1800);
+    intake.v_runWheels(775);
   }
 }
