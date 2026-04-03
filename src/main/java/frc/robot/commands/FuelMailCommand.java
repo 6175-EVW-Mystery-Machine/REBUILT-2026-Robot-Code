@@ -21,7 +21,7 @@ public class FuelMailCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    CANdle.v_unJam();
+    CANdle.v_fuelMail();
     intake.v_runWheels(-1500);
     driverController.setRumble(RumbleType.kLeftRumble, 1);
   }

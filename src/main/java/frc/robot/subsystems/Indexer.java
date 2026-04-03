@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkBase.ControlType;
 
 import static com.revrobotics.spark.SparkBase.ControlType.kMAXMotionVelocityControl;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -38,7 +37,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void v_runWheels(double RPM) {
-    m_vortex.getClosedLoopController().setSetpoint(RPM/66.2, ControlType.kMAXMotionVelocityControl);
+    m_vortex.getClosedLoopController().setSetpoint(RPM/66.2, kMAXMotionVelocityControl);
     indexing = true;
   }
 

@@ -2,7 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -13,14 +12,6 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
 import static edu.wpi.first.math.util.Units.inchesToMeters;
 import static frc.robot.Constants.CANStatus;
-import static frc.robot.Constants.blueHubLocation;
-import static frc.robot.Constants.blueLeftPassing;
-import static frc.robot.Constants.blueRightPassing;
-import static frc.robot.Constants.redHubLocation;
-import static frc.robot.Constants.redLeftPassing;
-import static frc.robot.Constants.redRightPassing;
-import static frc.robot.Constants.target;
-import static frc.robot.subsystems.TurretFlywheel.passing;
 
 import com.revrobotics.util.StatusLogger;
 
