@@ -104,7 +104,7 @@ public final class Constants {
       .withInverted(Clockwise_Positive)
       .withNeutralMode(Brake);
       public static final CurrentLimitsConfigs RingGearCurrentLimits = new CurrentLimitsConfigs()
-      .withSupplyCurrentLimit(40)
+      .withSupplyCurrentLimit(50)
       .withStatorCurrentLimit(60);
   }
 
@@ -124,8 +124,8 @@ public final class Constants {
       .withInverted(CounterClockwise_Positive)
       .withNeutralMode(Coast);
       public static final CurrentLimitsConfigs IntakeCurrentLimits = new CurrentLimitsConfigs()
-      .withSupplyCurrentLimit(40)
-      .withStatorCurrentLimit(60);
+      .withSupplyCurrentLimit(60)
+      .withStatorCurrentLimit(80);
   }
 
   public static class CANdle {
