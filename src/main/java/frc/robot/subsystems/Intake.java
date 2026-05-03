@@ -10,6 +10,7 @@ import static frc.robot.Constants.ManipulatorCanivore;
 import static frc.robot.Constants.TurretConstants.VelocityRequest;
 import static frc.robot.Constants.IntakeConstants.IntakeID;
 import static frc.robot.Constants.IntakeConstants.IntakeConfig;
+import static frc.robot.Constants.IntakeConstants.IntakeCurrentLimits;
 import static frc.robot.Constants.IntakeConstants.IntakeFeedbackConfig;
 import static frc.robot.Constants.IntakeConstants.IntakeOutputConfig;
 
@@ -26,7 +27,8 @@ public class Intake extends SubsystemBase {
     TalonFXConfiguration m_config = new TalonFXConfiguration()
     .withSlot0(Slot0Configs.from(IntakeConfig))
     .withFeedback(IntakeFeedbackConfig)
-    .withMotorOutput(IntakeOutputConfig);
+    .withMotorOutput(IntakeOutputConfig)
+    .withCurrentLimits(IntakeCurrentLimits);
 
     m_krakenX44.getConfigurator().apply(m_config);
   }

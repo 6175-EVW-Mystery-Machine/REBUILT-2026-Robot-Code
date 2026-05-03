@@ -9,12 +9,10 @@ import frc.robot.subsystems.Intake;
 public class IntakeCommand extends Command {
   private final Intake intake;
   private final CTRE_CANdle CANdle;
-  private final CommandXboxController driverController;
 
-  public IntakeCommand(Intake intake, CTRE_CANdle CANdle, CommandXboxController driverController) {
+  public IntakeCommand(Intake intake, CTRE_CANdle CANdle) {
     this.intake = intake;
     this.CANdle = CANdle;
-    this.driverController = driverController;
     addRequirements(intake, CANdle);
   }
 
@@ -23,7 +21,6 @@ public class IntakeCommand extends Command {
   public void execute() {
     CANdle.v_intakeLights();
     intake.v_runWheels(775);
-    driverController.setRumble(RumbleType.kLeftRumble, 0.5);
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +28,5 @@ public class IntakeCommand extends Command {
   public void end(boolean interrupted) {
     CANdle.v_clearIntake();
     intake.v_stopMotor();
-    driverController.setRumble(RumbleType.kLeftRumble, 0);
   }
 }

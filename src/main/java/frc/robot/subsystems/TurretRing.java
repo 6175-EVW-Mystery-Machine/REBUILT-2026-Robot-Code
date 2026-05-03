@@ -11,6 +11,7 @@ import static frc.robot.Constants.TurretConstants.VelocityRequest;
 import static frc.robot.Constants.TurretConstants.PositionRequest;
 import static frc.robot.Constants.TurretConstants.RingGear0Config;
 import static frc.robot.Constants.TurretConstants.RingGear1Config;
+import static frc.robot.Constants.TurretConstants.RingGearCurrentLimits;
 import static frc.robot.Constants.TurretConstants.RingGearID;
 import static frc.robot.Constants.TurretConstants.RingGearLimits;
 import static frc.robot.Constants.ManipulatorCanivore;
@@ -37,7 +38,8 @@ public class TurretRing extends SubsystemBase {
       .withFeedback(RingGearFeedbackConfig)
       .withMotionMagic(RingGearMotionMagicConfig)
       .withSoftwareLimitSwitch(RingGearLimits)
-      .withMotorOutput(RingGearMotorOutput);
+      .withMotorOutput(RingGearMotorOutput)
+      .withCurrentLimits(RingGearCurrentLimits);
 
     m_krakenX44.getConfigurator().apply(m_config);
   }

@@ -7,6 +7,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import static com.ctre.phoenix6.signals.MotorAlignmentValue.Opposed;
 import static frc.robot.Constants.TurretConstants.FlywheelConfig;
+import static frc.robot.Constants.TurretConstants.FlywheelCurrentLimits;
 import static frc.robot.Constants.TurretConstants.FlywheelFeedback;
 import static frc.robot.Constants.TurretConstants.FlywheelMotionMagicConfig;
 import static frc.robot.Constants.TurretConstants.FlywheelLeaderID;
@@ -36,7 +37,8 @@ public class TurretFlywheel extends SubsystemBase {
     TalonFXConfiguration m_config = new TalonFXConfiguration()
     .withSlot0(Slot0Configs.from(FlywheelConfig))
     .withMotionMagic(FlywheelMotionMagicConfig)
-    .withFeedback(FlywheelFeedback);
+    .withFeedback(FlywheelFeedback)
+    .withCurrentLimits(FlywheelCurrentLimits);
 
     m_flywheel.getConfigurator().apply(m_config);
     m_flywheelFollower.getConfigurator().apply(m_config);
@@ -58,13 +60,13 @@ public class TurretFlywheel extends SubsystemBase {
     } else if (distanceToTarget > 100) {
       m_flywheel.setControl(VelocityRequest.withVelocity(MathUtil.interpolate(
         670 / 60,
-        1400 / 60,
+        1350 / 60,
         distanceToTarget / 220)));
 
       //RPM CHECK
       PredictedRPM = MathUtil.interpolate(
         670 / 60,
-        1400 / 60,
+        1350 / 60,
         distanceToTarget / 220);
     }
     shooting = true;

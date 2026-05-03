@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.CANBus.CANBusStatus;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
@@ -14,12 +15,8 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.RGBWColor;
 
-import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.numbers.N1;
-import edu.wpi.first.math.numbers.N3;
 
 import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
 import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
@@ -51,14 +48,6 @@ public final class Constants {
   public static final CANBusStatus CANStatus = new CANBusStatus();
 
 
-
-  public static class OdometryConstants {
-    public static final Matrix<N3, N1> StateSTDDevs = VecBuilder.fill(
-      0.1, //X: 10cm error per meter (Trust Wheels)
-      0.1, //Y: 10cm error per meter
-      0.05); //Theta: 0.05 radians (Trust Pigeon)
-  }
-
   public static class TurretConstants {
     //TURRET FLYWHEEL
     public static int FlywheelLeaderID = 18;
@@ -78,6 +67,9 @@ public final class Constants {
       .withMotionMagicAcceleration(1000)
       .withMotionMagicCruiseVelocity(1500)
       .withMotionMagicJerk(0);
+      public static final CurrentLimitsConfigs FlywheelCurrentLimits = new CurrentLimitsConfigs()
+      .withSupplyCurrentLimit(50)
+      .withStatorCurrentLimit(80);
 
     //TURRET GEAR
     public static int RingGearID = 16;
@@ -111,6 +103,9 @@ public final class Constants {
       public static final MotorOutputConfigs RingGearMotorOutput = new MotorOutputConfigs()
       .withInverted(Clockwise_Positive)
       .withNeutralMode(Brake);
+      public static final CurrentLimitsConfigs RingGearCurrentLimits = new CurrentLimitsConfigs()
+      .withSupplyCurrentLimit(40)
+      .withStatorCurrentLimit(60);
   }
 
   public static class IntakeConstants {
@@ -128,6 +123,9 @@ public final class Constants {
       public static final MotorOutputConfigs IntakeOutputConfig = new MotorOutputConfigs()
       .withInverted(CounterClockwise_Positive)
       .withNeutralMode(Coast);
+      public static final CurrentLimitsConfigs IntakeCurrentLimits = new CurrentLimitsConfigs()
+      .withSupplyCurrentLimit(40)
+      .withStatorCurrentLimit(60);
   }
 
   public static class CANdle {

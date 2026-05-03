@@ -8,6 +8,9 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.AutoIntakeCommand;
@@ -90,8 +95,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX((-driverController.getLeftY() * MaxSpeed) * .75) // Drive forward with negative Y (forward)
-                    .withVelocityY((-driverController.getLeftX() * MaxSpeed) * .75) // Drive left with negative X (left)
+                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -107,10 +112,10 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // reset the field-centric heading on left bumper press
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
@@ -120,25 +125,25 @@ public class RobotContainer {
 
         //START OF MANIPULATOR CONTROLS
         driverController.leftTrigger(0.5)
-        .whileTrue(new IntakeCommand(Intake, CANdle, driverController));
+        .whileTrue(new IntakeCommand(Intake, CANdle));
 
         driverController.rightTrigger(0.5)
-        .whileTrue(new ShootCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle, driverController));
+        .whileTrue(new ShootCommand(TurretRing, TurretWheel, Indexer, Feeder, Intake, CANdle));
 
 
         //TURRET MANUAL CONTROLS
         driverController.povRight()
-        .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(500)))
+        .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(-300)))
         .onFalse(new InstantCommand(() -> TurretRing.v_stopMotor()));
         driverController.povLeft()
-        .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(-500)))
+        .whileTrue(new InstantCommand(() -> TurretRing.v_runTurret(300)))
         .onFalse(new InstantCommand(() -> TurretRing.v_stopMotor()));
 
         driverController.a()
-        .whileTrue(new FuelMailCommand(Intake, CANdle, driverController));
+        .whileTrue(new FuelMailCommand(Intake, CANdle));
 
         driverController.y()
-        .whileTrue(new UnJamCommand(Indexer, CANdle, driverController));
+        .whileTrue(new UnJamCommand(Indexer, CANdle));
     }
 
     public Command getAutonomousCommand() {

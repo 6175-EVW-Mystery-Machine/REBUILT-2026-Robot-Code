@@ -2,9 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.LimelightHelpers.PoseEstimate;
 
 import static edu.wpi.first.math.util.Units.inchesToMeters;
+import static edu.wpi.first.math.util.Units.metersToInches;
 import static frc.robot.Constants.CANStatus;
 
 import com.revrobotics.util.StatusLogger;
@@ -39,7 +38,8 @@ public class Robot extends TimedRobot {
     0,
     0,
     0);
-   
+    LimelightHelpers.SetIMUMode("limelight-left", 0); 
+    LimelightHelpers.SetIMUMode("limelight-front", 0); 
   }
 
   @Override
@@ -80,6 +80,9 @@ public class Robot extends TimedRobot {
       if (frontPoseEstimate != null && frontPoseEstimate.tagCount > 0 && angVelocity < 2.0 && frontPoseEstimate.avgTagDist < 3.5) {
         m_robotContainer.drivetrain.addVisionMeasurement(frontPoseEstimate.pose, frontPoseEstimate.timestampSeconds);
       }
+
+    SmartDashboard.putNumber("Target Y", metersToInches(LimelightHelpers.getTargetPose3d_CameraSpace("limelight-front").getY()));
+    SmartDashboard.putNumber("Target X", metersToInches(LimelightHelpers.getTargetPose3d_CameraSpace("limelight-front").getX()));
   }
 
   @Override

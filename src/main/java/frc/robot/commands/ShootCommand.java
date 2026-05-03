@@ -20,22 +20,19 @@ public class ShootCommand extends Command {
   private final Feeder feeder;
   private final Intake intake;
   private final CTRE_CANdle CANdle;
-  private final CommandXboxController controller;
 
   public ShootCommand(TurretRing turretRing,
   TurretFlywheel turretFlywheel,
   Indexer indexer,
   Feeder feeder,
   Intake intake,
-  CTRE_CANdle CANdle,
-  CommandXboxController controller) {
+  CTRE_CANdle CANdle) {
     this.turretRing = turretRing;
     this.turretFlywheel = turretFlywheel;
     this.indexer = indexer;
     this.feeder = feeder;
     this.intake = intake;
     this.CANdle = CANdle;
-    this.controller = controller;
     addRequirements(turretRing, turretFlywheel, indexer, feeder, intake, CANdle);
   }
 
@@ -48,7 +45,6 @@ public class ShootCommand extends Command {
       turretRing.v_positionTurret();
     if (ShooterAtSpeed == true) {
     CANdle.v_runAll();
-    controller.setRumble(RumbleType.kRightRumble, 1);
       feeder.v_runWheels(4400);
         indexer.v_runWheels(2250);
     } else {
@@ -68,7 +64,6 @@ public class ShootCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    controller.setRumble(RumbleType.kRightRumble, 0);
     CANdle.v_stopAll();
     turretRing.v_stopMotor();
       turretFlywheel.v_stopMotors();

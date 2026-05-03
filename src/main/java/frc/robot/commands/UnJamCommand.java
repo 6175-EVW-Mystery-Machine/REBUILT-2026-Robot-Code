@@ -9,12 +9,10 @@ import frc.robot.subsystems.Indexer;
 public class UnJamCommand extends Command {
   private final Indexer indexer;
   private final CTRE_CANdle CANdle;
-  private final CommandXboxController driverController;
  
-  public UnJamCommand(Indexer indexer, CTRE_CANdle CANdle, CommandXboxController driverController) {
+  public UnJamCommand(Indexer indexer, CTRE_CANdle CANdle) {
     this.indexer = indexer;
     this.CANdle = CANdle;
-    this.driverController = driverController;
     addRequirements(indexer, CANdle);
   }
 
@@ -23,7 +21,6 @@ public class UnJamCommand extends Command {
   public void execute() {
     CANdle.v_unJam();
     indexer.v_runWheels(-2000);
-    driverController.setRumble(RumbleType.kRightRumble, 1);
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +28,5 @@ public class UnJamCommand extends Command {
   public void end(boolean interrupted) {
     CANdle.v_clearIndexer();
     indexer.v_stopMotor();
-    driverController.setRumble(RumbleType.kRightRumble, 0);
   }
 }
